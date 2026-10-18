@@ -11,9 +11,11 @@ class OpenNewAccountPage():
         self.account_options = self.account_selector.locator("option")
         self.open_new_account_button = self.right_panel.get_by_role("button", name="Open New Account")
         self.new_account_id = self.right_panel.locator("a#newAccountId")
+        self.account_opened_sign = self.right_panel.get_by_role("heading", name="Account Opened!")
 
     def open(self):
         self.page.goto("openaccount.htm")
+
     def is_loaded(self):
         expect(self.title).to_be_visible()
 
@@ -27,7 +29,7 @@ class OpenNewAccountPage():
         self.open_new_account_button.click()
 
     def account_opened(self):
-        return self.page.get_by_text("Account Opened!").first
+        expect(self.account_opened_sign).to_be_visible()
 
     def get_new_account_number(self):
         account_id = self.new_account_id.inner_text()
