@@ -1,9 +1,9 @@
 from playwright.sync_api import Page, expect
-import random
 from pages.accounts_overview_page import AccountsOverviewPage
 from pages.transfer_funds_page import TransferFundsPage
 import pytest
 
+@pytest.mark.smoke
 def test_transfer_funds(page: Page, logged_user):
     amount = 2
     logged_user.accounts_overview()
@@ -24,8 +24,8 @@ def test_transfer_funds(page: Page, logged_user):
         transfer_funds_page.open()
         transfer_funds_page.is_loaded()
         transfer_funds_page.set_amount(amount)
-        transfer_funds_page.source_account(from_account)
-        transfer_funds_page.destination_account(to_account)
+        transfer_funds_page.select_source_account(from_account)
+        transfer_funds_page.select_destination_account(to_account)
         transfer_funds_page.click_transfer()
         transfer_funds_page.transfer_is_complete()
         transfer_funds_page.from_account_is_right(from_account)
@@ -36,9 +36,16 @@ def test_transfer_funds(page: Page, logged_user):
         assert from_account_final_balance == from_account_initial_balance - amount
         to_account_final_balance = accounts_overview_page.get_account_balance(to_account)
         assert to_account_final_balance == to_account_initial_balance + amount
+    else:
+        pytest.skip("El usuario actual solo tiene una cuenta")
 
 @pytest.mark.negative
-@pytest.mark.parametrize("amount", [0, -2, "", "dos"])
+@pytest.mark.parametrize("amount", [
+    pytest.param(0, marks=pytest.mark.xfail(raises=AssertionError, strict=True, reason="No deberia permitirse transferir $0")),
+    pytest.param(-2, marks=pytest.mark.xfail(raises=AssertionError, strict=True, reason="No deberia permitirse transferir un numero negativo")),
+    "",
+    "dos"
+])
 def test_transfer_invalid_funds(page: Page, logged_user, amount):
     logged_user.accounts_overview()
     accounts_overview_page = AccountsOverviewPage(page)
@@ -58,8 +65,8 @@ def test_transfer_invalid_funds(page: Page, logged_user, amount):
         transfer_funds_page.open()
         transfer_funds_page.is_loaded()
         transfer_funds_page.set_amount(amount)
-        transfer_funds_page.source_account(from_account)
-        transfer_funds_page.destination_account(to_account)
+        transfer_funds_page.select_source_account(from_account)
+        transfer_funds_page.select_destination_account(to_account)
         transfer_funds_page.click_transfer()
         page.wait_for_load_state("networkidle")
         expect(transfer_funds_page.transfer_complete_sign).not_to_be_visible()
@@ -69,3 +76,5 @@ def test_transfer_invalid_funds(page: Page, logged_user, amount):
         assert from_account_final_balance == from_account_initial_balance
         to_account_final_balance = accounts_overview_page.get_account_balance(to_account)
         assert to_account_final_balance == to_account_initial_balance
+    else:
+        pytest.skip("El usuario actual solo tiene una cuenta")

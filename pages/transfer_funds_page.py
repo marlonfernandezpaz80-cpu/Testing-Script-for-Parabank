@@ -34,10 +34,10 @@ class TransferFundsPage():
     def set_amount(self, amount):
         self.amount_box.fill(str(amount))
 
-    def source_account(self, account):
+    def select_source_account(self, account):
         self.from_account.select_option(str(account))
 
-    def destination_account(self, account):
+    def select_destination_account(self, account):
         self.to_account.select_option(str(account))
 
     def get_from_options(self):
