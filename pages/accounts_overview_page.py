@@ -18,7 +18,6 @@ class AccountsOverviewPage():
     def is_loaded(self):
         expect(self.title).to_be_visible()
         expect(self.total).to_be_visible()
-        
 
     def get_accounts_list(self):
         wait_for(self.accounts_numbers)
@@ -30,18 +29,11 @@ class AccountsOverviewPage():
         account = choice(accounts_list)
         return account
 
-
     def click_account(self, account):
         self.accounts_numbers.filter(has_text=account).click()
-
 
     def get_account_balance(self, account):
         line = self.table_line.filter(has_text=account)
         td_list = line.locator("td").all_inner_texts()
         account_balance = td_list[1].replace("$", "")
         return float(account_balance)
-
-    def show_td_list(self, account):
-        line = self.table_line.filter(has_text=account)
-        td_list = line.locator("td").all_inner_texts()
-        print(td_list)

@@ -18,7 +18,8 @@ def generate_user(with_plus=True):
             "phone_number": fake.phone_number() if with_plus else fake.phone_number().replace("+", ""),
             "ssn": fake.ssn(),
             "username": fake.user_name(),
-            "password": fake.password()
+            "password": fake.password(),
+            "account": fake.numerify(text="########")
         }
     return user
 

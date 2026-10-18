@@ -58,5 +58,8 @@ class BillPayPage():
     def click_send_payment(self):
         self.send_payment_button.click()
 
-    def payment_finished_sign(self):
+    def payment_finished(self):
         expect(self.bill_payment_complete).to_be_visible()
+
+    def payment_not_finished(self):
+        expect(self.bill_payment_complete).not_to_be_visible()
