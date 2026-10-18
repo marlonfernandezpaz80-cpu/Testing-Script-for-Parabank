@@ -39,7 +39,7 @@ class AccountsOverviewPage():
         line = self.table_line.filter(has_text=account)
         td_list = line.locator("td").all_inner_texts()
         account_balance = td_list[1].replace("$", "")
-        account_balance = account_balance.replace(",", "")
+        #account_balance = account_balance.replace(",", "")
         return float(account_balance)
 
     def show_td_list(self, account):

@@ -6,7 +6,8 @@ from pages.transaction_details_page import TransactionDetailsPage
 from random import choice
 from datetime import datetime
 from pages.utils import actualize_date, get_all_dates, get_account_with_activity
-'''
+
+
 def test_find_by_transaction_id(logged_user, page: Page):
     logged_user.accounts_overview()
     accounts_overview_page = AccountsOverviewPage(page)
@@ -56,7 +57,7 @@ def test_find_by_date(logged_user, page: Page):
     result_dates = find_transactions_page.get_lines_dates(lines)
     result_dates = set(result_dates)
     assert len(result_dates) == 1
-'''
+
 def test_find_by_date_range(logged_user, page: Page):
     logged_user.accounts_overview()
     accounts_overview_page = AccountsOverviewPage(page)
@@ -91,8 +92,6 @@ def test_find_by_date_range(logged_user, page: Page):
     else:
         final_date = dates[0]
         starting_date = dates[0]
-
-    #Fin del flujo
     find_transactions_page = FindTransactionsPage(page)
     find_transactions_page.open()
     find_transactions_page.is_loaded()

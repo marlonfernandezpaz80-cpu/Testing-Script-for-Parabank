@@ -26,6 +26,7 @@ class AccountsActivityPage ():
 
     def is_loaded(self):
         expect(self.title).to_be_visible()
+        expect(self.table_line.first.locator("td").first).not_to_have_text("")
 
     def confirm_account(self, account):
         expect(self.account_number).to_contain_text(account)
@@ -56,7 +57,7 @@ class AccountsActivityPage ():
     def get_a_line_index(self):
         lines = self.table_line.all_inner_texts()
         lines_len = len(lines)
-        line_index = choice(range(0, lines_len - 1))
+        line_index = choice(range(lines_len))
         return line_index
 
     def click_transaction(self, line_index):

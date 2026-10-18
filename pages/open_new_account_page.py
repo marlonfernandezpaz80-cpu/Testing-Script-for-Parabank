@@ -12,6 +12,8 @@ class OpenNewAccountPage():
         self.open_new_account_button = self.right_panel.get_by_role("button", name="Open New Account")
         self.new_account_id = self.right_panel.locator("a#newAccountId")
 
+    def open(self):
+        self.page.goto("openaccount.htm")
     def is_loaded(self):
         expect(self.title).to_be_visible()
 

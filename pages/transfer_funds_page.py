@@ -12,9 +12,24 @@ class TransferFundsPage():
         self.to_account = self.right_panel.locator("select#toAccountId.input")
         self.to_account_option = self.to_account.locator("option")
         self.transfer_button = self.right_panel.get_by_role("button", name="Transfer")
+        self.transfer_complete_sign = self.right_panel.get_by_role("heading", name="Transfer Complete!")
+        self.from_account_id_result = self.right_panel.locator("#fromAccountIdResult")
+        self.to_account_id_result = self.right_panel.locator("#toAccountIdResult")
+        
+    def open(self):
+        self.page.goto("transfer.htm")
 
     def is_loaded(self):
         expect(self.title).to_be_visible()
+
+    def transfer_is_complete(self):
+        expect(self.transfer_complete_sign).to_be_visible()
+
+    def to_account_is_right(self, account):
+        expect(self.to_account_id_result).to_contain_text(account)
+
+    def from_account_is_right(self, account):
+        expect(self.from_account_id_result).to_contain_text(account)
 
     def set_amount(self, amount):
         self.amount_box.fill(str(amount))

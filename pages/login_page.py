@@ -10,6 +10,8 @@ class LoginPage():
         self.login_button = self.login_panel.get_by_role("button", name="Log In")
         self.title = self.page.get_by_role("heading", name="Customer Login")
         self.register_link = self.page.get_by_role("link", name="Register")
+        self.error_sign = self.page.get_by_role("heading", name="Error!")
+        
     def open(self):
         self.page.goto("index.htm")
 
