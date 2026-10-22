@@ -10,7 +10,7 @@ from pages.update_profile_page import UpdateProfilePage
 from pages.menu_component import MenuComponent
 from pages.login_page import LoginPage
 from playwright.sync_api import Page, expect
-from pages.utils import get_account_with_activity
+from .helpers import get_account_with_activity
 import pytest
 
 main_pages = [AccountsOverviewPage, OpenNewAccountPage, BillPayPage, FindTransactionsPage, RequestLoanPage, TransferFundsPage, UpdateProfilePage]
