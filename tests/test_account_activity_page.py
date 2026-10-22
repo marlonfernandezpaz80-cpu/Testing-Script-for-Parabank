@@ -1,4 +1,4 @@
-from playwright.sync_api import Page, expect
+from playwright.sync_api import Page
 from pages.accounts_overview_page import AccountsOverviewPage
 from pages.account_activity_page import AccountsActivityPage
 

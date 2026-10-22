@@ -1,6 +1,7 @@
 from playwright.sync_api import Page, expect
 import random
 from .utils import wait_for
+
 class OpenNewAccountPage():
     def __init__(self, page: Page):
         self.page = page

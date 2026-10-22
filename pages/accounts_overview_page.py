@@ -1,6 +1,7 @@
 from playwright.sync_api import Page, expect
-from .utils import wait_for
-from random import choice
+from .utils import wait_for, parse_amount, generate_columns
+from random import choice 
+
 class AccountsOverviewPage():
     def __init__(self, page: Page):
         self.page = page
@@ -34,6 +35,5 @@ class AccountsOverviewPage():
 
     def get_account_balance(self, account):
         line = self.table_line.filter(has_text=account)
-        td_list = line.locator("td").all_inner_texts()
-        account_balance = td_list[1].replace("$", "")
-        return float(account_balance)
+        columns = generate_columns(line)
+        return parse_amount(columns[1])

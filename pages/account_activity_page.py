@@ -1,6 +1,7 @@
 from playwright.sync_api import Page, expect
 from datetime import datetime
 from random import choice
+from .utils import parse_amount, generate_columns
 
 class AccountsActivityPage ():
     def __init__(self, page: Page):
@@ -47,10 +48,9 @@ class AccountsActivityPage ():
         return self.table_line.all_inner_texts()
 
     def get_lines_dates(self):
-        lines = self.get_lines_list()
         dates = []
-        for line in lines:
-            columns = line.split("\t")
+        for line in self.get_lines_list():
+            columns = generate_columns(line)
             dates.append(columns[0])
         return dates
 
@@ -101,7 +101,7 @@ class AccountsActivityPage ():
                 debits = []
                 credits = []
                 for line in self.table_line.all_inner_texts():
-                    columns = line.split("\t")
+                    columns = generate_columns(line)
                     dates.append(columns[0])
                     if columns[2] and not columns[3]:  
                         debits.append(columns[2][1::])
@@ -123,7 +123,7 @@ class AccountsActivityPage ():
                     debits = []
                     credits = []
                     for line in self.table_line.all_inner_texts():
-                        columns = line.split("\t")
+                        columns = generate_columns(line)
                         if columns[2] and not columns[3]:  
                             debits.append(columns[2][1::])
                         if not columns[2] and columns[3]: 
@@ -132,3 +132,10 @@ class AccountsActivityPage ():
                         assert not debits
                     elif type == "Debit":
                         assert not credits
+
+    def get_amounts_list(self):
+        amounts = set()
+        for line in self.get_lines_list():
+            _, _, debit, credit = generate_columns(line)
+            amounts.add(parse_amount(debit or credit))
+        return list(amounts)

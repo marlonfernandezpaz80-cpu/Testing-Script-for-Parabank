@@ -9,7 +9,7 @@ from pages.transfer_funds_page import TransferFundsPage
 from pages.update_profile_page import UpdateProfilePage
 from pages.menu_component import MenuComponent
 from pages.login_page import LoginPage
-from playwright.sync_api import Page, expect, sync_playwright
+from playwright.sync_api import Page, expect
 from pages.utils import get_account_with_activity
 import pytest
 

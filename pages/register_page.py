@@ -1,7 +1,6 @@
 from playwright.sync_api import Page, expect
 import pytest
 
-
 class RegisterPage():
     def __init__(self, page: Page):
         self.page = page
